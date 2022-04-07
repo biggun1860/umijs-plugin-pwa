@@ -43,12 +43,7 @@ export default function(api: IApi) {
 
     api.addHTMLHeadScripts(async () => {
       await cpy(`${__dirname}/registerServiceWorker.js`, `${absOutputPath}`);
-      await cpy(`${__dirname}/pwacompat.min.js`, `${absOutputPath}`);
       return [
-        {
-          src: `./pwacompat.min.js`,
-          async: true,
-        },
         {
           src: `./registerServiceWorker.js`,
         },
