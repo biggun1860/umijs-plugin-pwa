@@ -1,11 +1,11 @@
 {
-  "name": "umijs-plugin-pwa",
+  "name": "@intlgadmin/umijs-plugin-pwa",
   "main": "lib/index.js",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "",
   "authors": {
-    "name": "luoyelusheng",
-    "email": "luoyelusheng@gmail.com"
+    "name": "clzhu",
+    "email": "clzhu@tencent.com"
   },
   "scripts": {
     "start": "cross-env APP_ROOT=example umi dev",
@@ -31,6 +31,7 @@
     "@types/jest": "^25.1.3",
     "@types/node": "^13.7.7",
     "@types/shortid": "^0.0.29",
+    "@types/workbox-webpack-plugin": "^5.1.8",
     "@umijs/test": "^3.0.10",
     "@umijs/test-utils": "^1.0.0",
     "body-parser": "^1.18.2",
@@ -62,11 +63,11 @@
     "cpy": "^8.1.1",
     "load-json-file": "^6.2.0",
     "pwacompat": "^2.0.17",
-    "workbox-webpack-plugin": "^4.3.1",
     "shortid": "^2.2.15",
     "umi-utils": "^1.7.2",
+    "workbox-webpack-plugin": "^4.3.1",
     "write-json-file": "^4.3.0"
   },
-  "bugs": "https://github.com/luoyelusheng/umijs-plugin-pwa/issues",
-  "homepage": "https://github.com/luoyelusheng/umijs-plugin-pwa"
+  "bugs": "https://github.com/biggun1860/umijs-plugin-pwa/issues",
+  "homepage": "https://github.com/biggun1860/umijs-plugin-pwa"
 }

@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import cpy from 'cpy';
 import assert from 'assert';
 import writeJsonFile from 'write-json-file';
@@ -24,6 +26,8 @@ export default function(api: IApi) {
       default: {
         manifest,
         appStatusBar: '#fff',
+        autoRefresh: false,
+        showLog: true,
       },
       schema(joi) {
         return joi.object();
@@ -32,22 +36,17 @@ export default function(api: IApi) {
   });
 
   if (process.env.NODE_ENV === 'production') {
-    // api.addEntryImports(async () => {
-    //   return [
-    //     {
-    //       source: `${__dirname}/registerServiceWorker.js`,
-    //       specifier: 'registerServiceWorker',
-    //     },
-    //   ];
-    // });
-
-    api.addHTMLHeadScripts(async () => {
-      await cpy(`${__dirname}/registerServiceWorker.js`, `${absOutputPath}`);
-      return [
-        {
-          src: `./registerServiceWorker.js`,
-        },
-      ];
+    api.addEntryCode(() => {
+      const registerTpl = readFileSync(
+        join(__dirname, 'registerServiceWorker.tpl'),
+        'utf-8',
+      );
+      const registerConfig = {
+        showLog: api.config.pwa.showLog,
+        autoRefresh: api.config.pwa.autoRefresh,
+        publicPath: api.config.publicPath,
+      };
+      return api.utils.Mustache.render(registerTpl, registerConfig);
     });
 
     api.onBuildComplete(async ({ err }) => {
@@ -86,17 +85,18 @@ export default function(api: IApi) {
       }
     });
 
+    // TODO: more meta
     api.addHTMLMetas(() => {
       return [
         {
           name: 'apple-mobile-web-app-status-bar-style',
-          content: options.appStatusBar,
+          content: api.config.pwa.appStatusBar,
         },
       ];
     });
 
     api.addHTMLLinks(() => {
-      let href: string = './manifest.json';
+      let href: string = `${api.config.publicPath}manifest.json`;
       if (options.hash) {
         href += '?v=' + v;
       }
@@ -112,8 +112,11 @@ export default function(api: IApi) {
     api.chainWebpack(config => {
       config.plugin('workbox').use(GenerateSW, [
         {
-          swDest: 'sw.js',
-          importWorkboxFrom: 'local',
+          skipWaiting: true,
+          clientsClaim: true,
+          cleanupOutdatedCaches: true,
+          ...options.workboxOptions,
+          swDest: 'service-worker.js',
         },
       ]);
       return config;
