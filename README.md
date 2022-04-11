@@ -14,6 +14,10 @@
 export default {
   pwa: {
     src: 'manifest.json',
+    autoRefresh: true,
+    workboxOptions: {
+      navigateFallback: '/index.html', // 支持单页应用子路由离线刷新
+    },
   },
   plugins: [['@intlgadmin/umijs-plugin-pwa']],
 };
