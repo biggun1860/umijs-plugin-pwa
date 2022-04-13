@@ -4,10 +4,7 @@ if ('serviceWorker' in navigator) {
     var eventName = event.detail.eventName;
     switch (eventName) {
       case 'ready':
-        console.log(
-          'App is being served from cache by a service worker.\n' +
-            'For more details, visit https://goo.gl/AFskqB',
-        );
+        console.log('App is being served from cache by a service worker.');
         break;
       case 'registered':
         console.log('Service worker has been registered.');
