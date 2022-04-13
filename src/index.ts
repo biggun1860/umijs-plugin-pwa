@@ -43,7 +43,7 @@ export default function(api: IApi) {
       const registerConfig = {
         showLog: api.config.pwa.showLog,
         autoRefresh: api.config.pwa.autoRefresh,
-        publicPath: api.config.publicPath,
+        publicPath: api.config.base,
       };
       return api.utils.Mustache.render(registerTpl, registerConfig);
     });
@@ -90,7 +90,7 @@ export default function(api: IApi) {
     });
 
     api.addHTMLLinks(() => {
-      let href: string = `${api.config.publicPath}manifest.json`;
+      let href: string = `${api.config.base}manifest.json`;
       if (options.hash) {
         href += '?v=' + v;
       }
