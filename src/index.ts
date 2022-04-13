@@ -24,7 +24,8 @@ export default function(api: IApi) {
     config: {
       default: {
         manifest,
-        appStatusBar: '#fff',
+        appleMobileWebAppStatusBarStyle: 'default',
+        appleMobileWebAppCapable: 'no',
         autoRefresh: false,
         showLog: true,
       },
@@ -79,12 +80,20 @@ export default function(api: IApi) {
       }
     });
 
-    // TODO: more meta
     api.addHTMLMetas(() => {
       return [
         {
           name: 'apple-mobile-web-app-status-bar-style',
-          content: api.config.pwa.appStatusBar,
+          content: api.config.pwa.appleMobileWebAppStatusBarStyle,
+        },
+      ];
+    });
+
+    api.addHTMLMetas(() => {
+      return [
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: api.config.pwa.appleMobileWebAppCapable,
         },
       ];
     });

@@ -77,9 +77,13 @@ export default {
   ```js
   <link rel="manifest" type="json" href="./manifest.json?v=uuWlArby8" />
   ```
-- `appStatusBar [string][default:#fff]` ios 特定值，其最终会渲染成
+- `appleMobileWebAppStatusBarStyle [string][default:default]` ios 特定值，详见 [Customize Status Bar](https://codeburst.io/progressive-web-apps-customize-status-bar-23c4b2de590f)，其最终会渲染成
   ```js
-  <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  ```
+- `appleMobileWebAppCapable [string][default:no]` ios 特定值，其最终会渲染成
+  ```js
+  <meta name="apple-mobile-web-app-capable" content="no" />
   ```
 
 ## Events
