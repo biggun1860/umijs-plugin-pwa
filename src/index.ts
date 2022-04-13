@@ -1,6 +1,5 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import cpy from 'cpy';
 import assert from 'assert';
 import writeJsonFile from 'write-json-file';
 import loadJsonFile from 'load-json-file';
@@ -52,11 +51,10 @@ export default function(api: IApi) {
     api.onBuildComplete(async ({ err }) => {
       if (!err) {
         const src: string = options.src;
-        let manifestSrc: string = `${__dirname}/manifest.json`;
+        let defaultManifest: any = {};
 
         if (src) {
-          manifestSrc = `${absSrcPath}/${src}`;
-
+          const manifestSrc = join(absSrcPath, src);
           const extension = src.substring(src.lastIndexOf('.') + 1);
 
           assert(
@@ -67,13 +65,9 @@ export default function(api: IApi) {
               extension,
             )}.`,
           );
+
+          defaultManifest = await loadJsonFile(manifestSrc);
         }
-
-        const defaultManifest = await loadJsonFile(manifestSrc);
-
-        await cpy(manifestSrc, `${absOutputPath}`, {
-          rename: () => 'manifest.json',
-        });
 
         const mergeManifest = Object.assign(
           {},
