@@ -48,11 +48,11 @@ if ('serviceWorker' in navigator) {
           installingWorker.onstatechange = function() {
             if (installingWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                emit('updated', registration);
                 {{#autoRefresh}}
                 console.log('Auto refresh is triggered.');
-                location.reload();
+                window.location.reload();
                 {{/autoRefresh}}
+                emit('updated', registration);
               } else {
                 emit('cached', registration);
               }
